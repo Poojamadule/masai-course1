@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    #card{
+        display:flex;
+        justify-content: space-between;
+        border:1px solid grey;
+        margin:auto;
+        width:50%;
+        height:100px;
+        background-color: rgb(153, 133, 133);
+        color:white;
+    }
+    #card button{
+        padding:10px 10px 10px 10px;
+        margin:10px 10px 10px 10px;
+        background-color: rgb(67, 67, 104);
+        color:white;
+    }
+    </style>
+</head>
+<body>
+    <div id="card">
+    <button> Hour:- <span id="hour">0</span></button> 
+    <button> Minutes:- <span id="min">0</span></button> 
+   
+       <button> Seconds:- <span id="sec">0</span></button> 
+    </div>
+</body>
+<script>
+    let hourEl=document.getElementById("hour");
+    let minEl=document.getElementById("min");
+    let secEl=document.getElementById("sec");
+    let sec = 0;
+    let min = 0;
+    let hour=0;
+
+
+    setInterval(function(){
+        if(min==59){
+            hour++;
+            hourEl.innerText = hour;
+            min=0;
+        }
+        if(sec ==59){
+            min++;
+            minEl.innerText = min;
+            sec=0;
+
+        }
+      sec++;
+      secEl.innerHTML = sec;
+    } , 1000);
+</script>
+</html>
