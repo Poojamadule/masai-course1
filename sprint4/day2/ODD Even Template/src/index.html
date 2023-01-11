@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="oddEven.js">
+   
+</head>
+<body>
+    <input type="text">
+    <button>Apply</button>
+</body>
+<script>
+     
+     let buttonEl=document.querySelector("button");
+    let inputEl= document.querySelector("input");
+    buttonEl.addEventListener("click",()=>{   
+   
+     let data=Number(inputEl.value);
+    
+       
+        let promise=new Promise(function(resolve,reject){
+
+            setTimeout(()=>{
+               if(data%2 == 0){
+                resolve("even")
+               }else{
+                setTimeout(()=>{
+                  if(data%2 !=0){
+                    resolve("odd")
+                  }
+                },4000)
+               }
+               
+            },2000)
+            
+                if(data!=inputEl.value){
+                    reject("error")
+                }
+               
+        
+        })
+    
+        promise
+    .then((el)=>{
+        console.log(el);
+    
+    })
+    .catch((el)=>{
+        console.log(el)
+    })
+    
+       
+});
+   
+
+
+</script>
+</html>
