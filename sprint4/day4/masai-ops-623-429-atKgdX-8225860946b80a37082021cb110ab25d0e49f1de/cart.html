@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cart Page</title>
+    <style>
+      /* Write all necessery css here  */
+      .nav{
+        
+        display:flex;
+        justify-content: space-around;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="nav">
+      <h1>Masai E-Commerce</h1>
+      <a href="./index.html">Home</a>
+      <a href="./cart.html">Cart</a>
+    </div>
+    <h1 id="total">Your Total cart Price is:- <span id="cart-total">0</span></h1>
+    <div id="cart-container">
+      <!-- Here Append All the cart Products  -->
+    </div>
+  </body>
+  <script>
+    // Write all necessery JS here 
+
+    let Cart=JSON.parse(localStorage.getItem("cart"))
+    let container=document.getElementById("cart-container")
+
+    function DisplayProduct(data){
+      let total=document.getElementById("cart-total")
+    container.innerHTML="";
+     Cart.forEach((product)=>{
+      let card= document.createElement("div");
+      let image= document.createElement("img");
+      let brand= document.createElement("h3");
+      let category= document.createElement("p");
+      let details= document.createElement("p");
+      let price= document.createElement("h4");
+      let quentity= document.createElement("p");
+      let Remove = document.createElement("button")
+      let Increment = document.createElement("button")
+      let Decrement = document.createElement("button")
+      quentity.textContent=product.quentity;
+       Remove.textContent = "Remove"
+       Increment.textContent="+"
+       Decrement.textContent = "-"
+       image.src = product.img;
+       brand.textContent = product.brand;
+       category.textContent = product.category;
+       details.textContent= product.details;
+       price.textContent=  product.price;
+       
+       Remove.addEventListener("click",()=>{
+        Cart=CSart.filter((ele)=>{
+          return ele.id!==product.id
+        })
+        localStorage.setItem("cart",JSON.stringify(Cart))
+        DisplayProduct()
+       });
+       Increment.addEventListener("click",()=>{
+        product=product.quentity++
+        localStorage.setItem("cart",JSON.stringify(Cart))
+        DisplayProduct()
+       });
+       Decrement.addEventListener("click",()=>{
+        if(product.quentity>1){
+          product=product.quentity--
+          localStorage.setItem("cart",JSON.stringify(Cart))
+          DisplayProduct()
+        }
+
+       })
+
+       card.append(image,brand,price,details,category,Increment,quentity,Decrement,Remove)
+       container.append(card)
+     });
+
+     let sum=0;
+     for(i=0;i<Cart.length;i++){
+      sum+=Cart[i].price*Cart[i].quentity
+     }
+    total.textContent=sum
+
+   }
+   DisplayProduct()
+  </script>
+</html>
