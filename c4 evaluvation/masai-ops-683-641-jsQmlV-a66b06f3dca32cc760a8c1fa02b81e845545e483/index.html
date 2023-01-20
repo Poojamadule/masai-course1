@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Page</title>
+    <style>
+      /* All Your css for Home page goes here  */
+      .nav{
+        display:flex;
+        justify-content: space-around;
+        align-items: center;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      }
+    #filter{
+      display:block;
+      margin:auto;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    
+    }
+    #sort{
+      display:block;
+      margin:auto;
+    }
+
+    #menu-container{
+      display:grid;
+      grid-template-columns: repeat(4,1fr);
+      gap:10px;
+    }
+    #menu-container>div img{
+      width:100%;
+
+    }
+    #menu-container>div button{
+      background-color: skyblue;
+      display:block;
+      margin:auto;
+      border:none;
+    }
+
+      
+    </style>
+  </head>
+
+  <body>s
+    <div class="nav">
+      <h1>Web Coffee Shop Menu</h1>
+      <a href="./index.html">Home</a>
+      <a href="./order.html">Ordered</a>
+    </div>
+    <div id="filter">
+      <input type="number" id="lower" />
+      <input type="number" id="upper" />
+      <button id="filter-btn">Filter</button>
+    </div>
+    <select id="sort">
+      <option value="">Sort By Price</option>
+      <option value="asc">Ascending</option>
+      <option value="desc">Descending</option>
+    </select>
+    <h1 id="alert"></h1>
+    <div id="menu-container">
+      <!-- Here Append All the Items  -->
+    </div>
+  </body>
+  <script>
+    // All your JS code for Home Page goes here
+   async function fetchData(){
+    try{
+      let url=await fetch("https://dbioz2ek0e.execute-api.ap-south-1.amazonaws.com/mockapi/get-coffee")
+      url=await url.json()
+      console.log(url)
+      DisplayProduct(url.data)
+    }catch(err){
+      console.log(err)
+    }
+   }
+   fetchData()
+
+   let filterBy=document.getElementById("filter");
+   let filterbtn=document.getElementById("filter-btn");
+   let filterupper=document.getElementById("upper")
+   let filterlower=document.getElementById("lower");
+   filterbtn.addEventListener("click",(e)=>{
+    e.preventDefault();
+    let fromprice=filterBy.lower.value;
+    let toprice=filterBy.upper.value;
+    console.log(fromprice+" "+toprice);
+    let filtered=fetchData.filter((product)=>{
+      if(product.price >= fromprice && element.price <= toprice){
+        return true;
+      }else{
+        return false;
+      }
+    })
+    DisplayProduct(filtered)
+   })
+   
+   
+   let cartArr=JSON.parse(localStorage.getItem("cart"))|| []
+
+
+   let container=document.getElementById("menu-container");
+   function DisplayProduct(data){
+    data.forEach((product)=>{
+      container.product="";
+      let card= document.createElement("div");
+      let image=document.createElement("image");
+      let title=document.createElement("h2");
+      let ingredients=document.createElement("p");
+      let des =document.createElement("p");
+      let price=document.createElement("h4");
+      let buy= document.createElement("button")
+      
+      buy.textContent="Buy"
+      image.src = product.img;
+      title.textContent=product.title;
+      ingredients.textContent=product.ingredients;
+      des.textContent=product.discription;
+      price.textContent=product.price;
+     
+      buy.addEventListener("click",()=>{
+        if(checkDuplicate(product)){
+          alert("Already Placed Order")
+        }else{
+           cartArr.push({...product,quentity:1})
+           localStorage.setItem("cart",JSON.stringify(cartArr))
+           alert("Successfully Placed Order")
+        }
+      })
+
+
+      card.append(image,title,ingredients,des,price,buy)
+    container.append(card)
+    })
+   
+   }
+   function checkDuplicate(){
+    for(i=0;i<cartArr.length;i++){
+      if(cartArr[i].id === product.id){
+        return true;
+      }
+    }
+    return false;
+   }
+
+  </script>
+</html>
